@@ -1,0 +1,41 @@
+version: '3.8'
+services:
+  db:
+    image: mariadb
+    restart: always
+    environment:
+      - MYSQL_DATABASE=db1
+      - MYSQL_USER=paulo
+      - MYSQL_PASSWORD=root
+      - MYSQL_ROOT_PASSWORD=root
+    ports:
+      - '3307:3306'
+    volumes:
+      - db_data:/var/lib/mysql
+
+  front:
+    build:
+      context: ./front
+      dockerfile: Dockerfile
+    restart: always
+    ports:
+      - '3001:3001'
+    volumes:
+      - ./front:/app
+    depends_on:
+      - back
+
+  back:
+    build:
+      context: ./back
+      dockerfile: Dockerfile
+    restart: always
+    ports:
+      - '8000:80'
+    volumes:
+      - ./back:/var/www/html
+    depends_on:
+      - db
+
+volumes:
+  db_data:

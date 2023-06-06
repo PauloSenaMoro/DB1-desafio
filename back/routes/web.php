@@ -1,0 +1,20 @@
+<?php
+
+use Illuminate\Support\Facades\Route;
+require __DIR__.'/api.php';
+
+/*
+|--------------------------------------------------------------------------
+| Web Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can register web routes for your application. These
+| routes are loaded by the RouteServiceProvider and all of them will
+| be assigned to the "web" middleware group. Make something great!
+|
+*/
+Route::post('/produtos', [ProdutoController::class, 'store'])->name('produtos.store');
+
+Route::get('/', function () {
+    return view('welcome');
+});
